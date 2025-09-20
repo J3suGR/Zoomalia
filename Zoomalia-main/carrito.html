@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - ZOOMALIA S.A.C</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .cart-container {
+            margin: 40px auto;
+            padding: 20px 0;
+        }
+        .cart-header {
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .cart-items {
+            margin-bottom: 30px;
+        }
+        .cart-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .item-variant {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .item-price {
+            font-weight: 600;
+            color: #c47225;
+        }
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+            border: none;
+            margin: 0 10px;
+            font-weight: 600;
+        }
+        .remove-item {
+            color: #dc3545;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .remove-item:hover {
+            text-decoration: underline;
+        }
+        .cart-summary {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        .summary-title {
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            color: #555;
+        }
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .checkout-btn {
+            background-color: #e78d17;
+            border: none;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+        .checkout-btn:hover {
+            background-color: #a3620d;
+        }
+        .continue-shopping {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .continue-shopping a {
+            color: #a3620d;
+            text-decoration: none;
+        }
+        .continue-shopping a:hover {
+            text-decoration: underline;
+        }
+        .promo-code {
+            margin-top: 20px;
+        }
+        .promo-input {
+            display: flex;
+        }
+        .promo-input input {
+            border-radius: 5px 0 0 5px;
+            border: 1px solid #ced4da;
+            padding: 10px 15px;
+            flex-grow: 1;
+        }
+        .promo-input button {
+            border-radius: 0 5px 5px 0;
+            background-color: #e78d17;
+            color: white;
+            border: none;
+            padding: 0 15px;
+        }
+        .empty-cart {
+            text-align: center;
+            padding: 50px 0;
+        }
+        .empty-cart i {
+            font-size: 60px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .empty-cart h3 {
+            margin-bottom: 20px;
+        }
+        .main-content {
+            min-height: calc(100vh - 350px);
+        }
+    </style>
+</head>
+<body>
+    <a href="https://wa.me/51925941194" class="whatsapp-float" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
+      </a>
+      
+    <!-- Top Bar -->
+<div class="top-bar">
+    <div class="left-info">
+      <i class="bi bi-envelope"></i> info@zoomalia.com
+      <i class="bi bi-phone"></i> 925 941 194
+    </div>
+    <div class="right-social">
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+      <a href="#"><i class="bi bi-twitter"></i></a>
+      <a href="#"><i class="bi bi-whatsapp"></i></a>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+<header class="main-header">
+    <div class="logo-area">
+      <img src="1.png" alt="Zoomalia Logo">
+      <div class="logo-text">
+        <span class="zoomalia">ZOOMALIA</span><span class="sac">S.A.C</span>
+      </div>
+    </div>
+  
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar productos o servicios...">
+      <button><i class="bi bi-search"></i></button>
+    </div>
+  
+    <div class="header-icons">
+      <a href="login.html"><i class="bi bi-person"></i></a>
+      <a href="carrito.html"><i class="bi bi-cart3"></i><span class="cart-count">1</span></a>
+  
+      <!-- Botón hamburguesa -->
+      <button class="hamburger" id="hamburger">
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+  </header>
+  
+  <!-- Navbar -->
+  <nav class="navbar">
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="index.html"><i class="bi bi-house"></i> Inicio</a></li>
+      <li><a href="tienda.html"><i class="bi bi-shop"></i> Tienda</a></li>
+      <li><a href="servicios.html"><i class="bi bi-heart-pulse"></i> Servicios</a></li>
+      <li><a href="acercade.html"><i class="bi bi-people"></i> Acerca de</a></li>
+      <li><a href="contacto.html"><i class="bi bi-telephone"></i> Contacto</a></li>
+    </ul>
+  </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container cart-container">
+            <div class="cart-header">
+                <h2><i class="bi bi-cart3"></i> Carrito de Compras</h2>
+                <p>Tienes 2 artículos en tu carrito</p>
+            </div>
+
+            <!-- If cart has items -->
+            <div class="row">
+                <!-- Cart Items List -->
+                <div class="col-lg-8">
+                    <div class="cart-items">
+                        <!-- Item 1 -->
+                        <div class="cart-item">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="https://dogncat.pe/wp-content/uploads/2023/04/1-5-e1727991754423.jpg" alt="Royal Canin" class="cart-item-image">
+                                </div>
+                                <div class="col-md-4">
+                                    <h5 class="item-title">Royal Canin Maxi Adult</h5>
+                                    <p class="item-variant">Tamaño: 15kg</p>
+                                    <p class="item-price">S/ 259.90</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="quantity-selector">
+                                        <button class="quantity-btn">-</button>
+                                        <input type="text" class="quantity-input" value="1" readonly>
+                                        <button class="quantity-btn">+</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-end">
+                                    <p class="fw-bold">S/ 259.90</p>
+                                </div>
+                                <div class="col-md-1 text-end">
+                                    <a href="#" class="remove-item"><i class="bi bi-trash"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="cart-item">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="https://keller.com.pe/cdn/shop/files/pelota-juguete-interactivo-para-gatos-mk7-keller-1.jpg?v=1738199485" alt="Juguete para gatos" class="cart-item-image">
+                                </div>
+                                <div class="col-md-4">
+                                    <h5 class="item-title">Juguete Interactivo para Gatos</h5>
+                                    <p class="item-variant">Color: Multicolor</p>
+                                    <p class="item-price">S/ 39.90</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="quantity-selector">
+                                        <button class="quantity-btn">-</button>
+                                        <input type="text" class="quantity-input" value="1" readonly>
+                                        <button class="quantity-btn">+</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-end">
+                                    <p class="fw-bold">S/ 39.90</p>
+                                </div>
+                                <div class="col-md-1 text-end">
+                                    <a href="#" class="remove-item"><i class="bi bi-trash"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Products -->
+                    <div class="related-products mt-5">
+                        <h4>También podría interesarte</h4>
+                        <div class="row mt-4">
+                            <!-- Related Item 1 -->
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <img src="https://promart.vteximg.com.br/arquivos/ids/5894355-1000-1000/image-77641794fe55490fa89a7aa9d183de7c.jpg?v=637886802318870000" class="card-img-top" alt="Producto recomendado">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Correa Retráctil</h5>
+                                        <p class="card-text">S/ 49.90</p>
+                                        <button class="btn btn-sm btn-outline-primary">Añadir</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Related Item 2 -->
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <img src="https://mascotify.pe/wp-content/uploads/2022/09/Canvit-Dental-Snack-saludable-para-perros.png" class="card-img-top" alt="Producto recomendado">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Snacks Dentales</h5>
+                                        <p class="card-text">S/ 25.90</p>
+                                        <button class="btn btn-sm btn-outline-primary">Añadir</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Related Item 3 -->
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <img src="https://promart.vteximg.com.br/arquivos/ids/6447193-1000-1000/145360.jpg?v=637968855416630000" class="card-img-top" alt="Producto recomendado">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Champú Antipulgas</h5>
+                                        <p class="card-text">S/ 35.90</p>
+                                        <button class="btn btn-sm btn-outline-primary">Añadir</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="col-lg-4">
+                    <div class="cart-summary">
+                        <h4 class="summary-title">Resumen del Pedido</h4>
+                        <div class="summary-item">
+                            <span>Subtotal (2 productos)</span>
+                            <span>S/ 299.80</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Envío</span>
+                            <span>S/ 15.00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Descuento</span>
+                            <span>- S/ 0.00</span>
+                        </div>
+                        <div class="summary-total">
+                            <span>Total</span>
+                            <span>S/ 314.80</span>
+                        </div>
+
+                        <!-- Promo Code Section -->
+                        <div class="promo-code">
+                            <label for="promo" class="form-label">¿Tienes un código promocional?</label>
+                            <div class="promo-input">
+                                <input type="text" id="promo" placeholder="Ingresa tu código">
+                                <button type="button">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <button class="checkout-btn">Proceder al Pago</button>
+                        <div class="continue-shopping">
+                            <a href="tienda.html"><i class="bi bi-arrow-left"></i> Seguir Comprando</a>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Policy Box -->
+                    <div class="mt-4 p-3 bg-light rounded">
+                        <div class="mb-3">
+                            <i class="bi bi-truck text-primary me-2"></i>
+                            <span class="fw-bold">Envío gratuito</span> en compras mayores a S/ 350
+                        </div>
+                        <div class="mb-3">
+                            <i class="bi bi-arrow-repeat text-primary me-2"></i>
+                            <span class="fw-bold">Devoluciones gratuitas</span> dentro de 30 días
+                        </div>
+                        <div>
+                            <i class="bi bi-shield-check text-primary me-2"></i>
+                            <span class="fw-bold">Pago seguro</span> con encriptación
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <!-- About Widget -->
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-widget">
+                    <h3>Sobre Nosotros</h3>
+                    <p>En ZOOMALIA S.A.C. nos dedicamos a proporcionar servicios veterinarios de calidad y productos premium para el cuidado de tus mascotas.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Links Widget -->
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-widget">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="bi bi-chevron-right"></i> Inicio</a></li>
+                        <li><a href="#"><i class="bi bi-chevron-right"></i> Nuestros Servicios</a></li>
+                        <li><a href="#"><i class="bi bi-chevron-right"></i> Tienda Online</a></li>
+                        <li><a href="#"><i class="bi bi-chevron-right"></i> Blog de Mascotas</a></li>
+                        <li><a href="#"><i class="bi bi-chevron-right"></i> Preguntas Frecuentes</a></li>
+                        <li><a href="#"><i class="bi bi-chevron-right"></i> Política de Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Services Widget -->
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-widget">
+                    <h3>Nuestros Servicios</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="bi bi-heart-pulse"></i> Consultas Veterinarias</a></li>
+                        <li><a href="#"><i class="bi bi-clipboard-pulse"></i> Vacunación</a></li>
+                        <li><a href="#"><i class="bi bi-scissors"></i> Peluquería Canina</a></li>
+                        <li><a href="#"><i class="bi bi-prescription2"></i> Farmacia Veterinaria</a></li>
+                        <li><a href="#"><i class="bi bi-egg-fried"></i> Nutrición Animal</a></li>
+                        <li><a href="#"><i class="bi bi-hospital"></i> Urgencias 24h</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Contact Widget -->
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-widget">
+                    <h3>Contáctanos</h3>
+                    <ul class="footer-contact-info">
+                        <li>
+                            <i class="bi bi-geo-alt"></i>
+                            <div>
+                                <p>Jr. Balta con Jr. José Santos Chocano</p>
+                                <p>(Parque Abel Martínez), Chilca, Huancayo, Perú</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="bi bi-telephone"></i>
+                            <div>
+                                <p>925 941 194</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="bi bi-envelope"></i>
+                            <div>
+                                <p>info@zoomalia.com</p>
+                                <p>soporte@zoomalia.com</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="bi bi-clock"></i>
+                            <div>
+                                <p>Lun - Dom: 9:00 AM - 8:00 PM</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Copyright -->
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2025 ZOOMALIA S.A.C. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>Diseñado por JYG para amantes de las mascotas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript for mobile menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                });
+            }
+            
+            // Dropdown toggle on mobile
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                const link = item.querySelector('.nav-link');
+                const dropdown = item.querySelector('.dropdown-menu');
+                
+                if (link && dropdown && window.innerWidth < 768) {
+                    link.addEventListener('click', function(e) {
+                        if (dropdown) {
+                            e.preventDefault();
+                            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+ <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+  
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  </script>
+  
+</body>
+</html>
